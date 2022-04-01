@@ -5,7 +5,7 @@
  2) git commit -m "description"
  3) git push
 
- ## How to install projects using opspark tool
+ ## How to install projects using opspark tool (install, test, submit)
  1) in terminal => code ~/.bashrc
  2) in bashrc => line 4 paste "export CHE_PROJECTS_ROOT=/workspace"
  3) exit out bashrc file and terminal
