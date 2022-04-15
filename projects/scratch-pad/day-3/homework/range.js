@@ -23,6 +23,14 @@
  */
 function range(start, end) {
     // YOUR CODE GOES BELOW HERE //
+    // create open array for collection
+    var arr = [];
+    for (var i = 0; i < 0; i++){
+        if (start > end){
+            return { range.(reverser())}
+        }
+    }
+    
     
     
     
