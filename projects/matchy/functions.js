@@ -9,9 +9,19 @@
  * and read every instruction carefully.
  */
 
+//const { animal } = require("./data");
+
 //////////////////////////////////////////////////////////////////////
 // Step 1 - Search ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
+
+function search(animals, animal){
+  for (var i = 0; i < animals.length; i++){
+    if (animals[i].name.toLowerCase() === animal.toLowerCase()){
+      return animals[i];
+      }
+    } return null;
+  }
 
 
 
@@ -19,18 +29,41 @@
 // Step 2 - Replace //////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
+function replace(animals, name, replacement){
+  for (var i = 0; i < animals.length; i++){
+    if (animals[i].name.toLowerCase() === name.toLowerCase()){
+      // animals[i].replace(replacement);
+      // animals.splice(i, replacement)
+      animals[i] = replacement;
+    }
+  }
+
+}
 
 
 //////////////////////////////////////////////////////////////////////
 // Step 3 - Remove ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 
+function remove(animals, name) {
+  for (var i = 0; i < animals.length; i++) {
+    if (animals[i].name === name){ animals.splice(i, 1);}
+  }
+}
+
 
 
 //////////////////////////////////////////////////////////////////////
 // Step 4 - Add ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
-
+function add(animals, animal){
+  var names = [];
+  for (var i = 0; i < animals.length; i++){
+    names.push(animals[i].name);
+  }
+  if (names.includes(animal.name) === false && animal.name.length > 0 && animal.species.length > 0) {
+    animals.push(animal);
+  }}
 
 
 /**
