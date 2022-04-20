@@ -32,8 +32,6 @@ function search(animals, animal){
 function replace(animals, name, replacement){
   for (var i = 0; i < animals.length; i++){
     if (animals[i].name.toLowerCase() === name.toLowerCase()){
-      // animals[i].replace(replacement);
-      // animals.splice(i, replacement)
       animals[i] = replacement;
     }
   }
