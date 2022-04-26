@@ -3,7 +3,11 @@
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode
 'use strict';
 
-var _ = {};
+var _ = {}; // variable declared as underscore and assigned an empty object
+
+/**
+ * 
+ */
 
 
 /**
@@ -20,6 +24,9 @@ var _ = {};
 *   _.identity(5) === 5
 *   _.identity({a: "b"}) === {a: "b"}
 */
+    _.identity = function(value){
+        return value;
+    }
 
 
 /** _.typeOf
@@ -41,6 +48,21 @@ var _ = {};
 * _.typeOf("javascript") -> "string"
 * _.typeOf([1,2,3]) -> "array"
 */
+_.typeOf = function(value){
+    if (typeof value !== "object"){
+        return typeof value;
+    } else if (typeof value === value){
+     return typeof value;
+    } else if (Array.isArray(value) === true){
+        return "array";
+    } else if (value === null) {
+        return "null";
+    } else if (value instanceof Date){
+        return "date";
+    } else {
+        return "object";
+    }
+}
 
 
 /** _.first
@@ -60,7 +82,22 @@ var _ = {};
 *   _.first(["a", "b", "c"], 1) -> "a"
 *   _.first(["a", "b", "c"], 2) -> ["a", "b"]
 */
-
+_.first = function (array, number) {
+    
+    //If <array> is not an array, return []
+    if (Array.isArray(array) === false) {
+        return [];
+    } else if (number < 0) {  //determine if number is negative
+        return [];
+    } else if (number === undefined) { //determine if the input number has not been passed in
+        //return first value of the array
+        return array[0];
+    } else if ( number > array.length) {
+        return array;
+    } else { //else we have regular inputs
+        return array.slice(0, number);
+    }
+}
 
 /** _.last
 * Arguments:
@@ -79,6 +116,22 @@ var _ = {};
 *   _.last(["a", "b", "c"], 1) -> "c"
 *   _.last(["a", "b", "c"], 2) -> ["b", "c"]
 */
+_.last = function (array, number) {
+    
+    //If <array> is not an array, return []
+    if (Array.isArray(array) === false) {
+        return [];
+    } else if (number < 0) {  //determine if number is negative
+        return [];
+    } else if (number === undefined) { //determine if the input number has not been passed in
+        //return first value of the array
+        return array[array.length - 1];
+    } else if ( number > array.length) {
+        return array;
+    } else { //else we have regular inputs
+        return array.slice(1, number[array.length - 1]);
+    }
+}
 
 
 /** _.indexOf
@@ -96,7 +149,16 @@ var _ = {};
 *   _.indexOf(["a","b","c"], "c") -> 2
 *   _.indexOf(["a","b","c"], "d") -> -1
 */
-
+_.indexOf = function(array, value) {
+    //iterate through the input array using a for loop
+    for (var i = 0; i < array.length; i++) {
+        //determine if the current aray value is equal to the input value
+        if(array[i] === value) { //iterate through array2, array[2] ==="c"//"c" === "c"
+            return i;
+        }
+    }
+    return -1;
+}
 
 /** _.contains
 * Arguments:
