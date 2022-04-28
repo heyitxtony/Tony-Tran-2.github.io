@@ -175,6 +175,15 @@ _.indexOf = function(array, value) {
 *   _.contains([1,"two", 3.14], "two") -> true
 */
 
+_.contains = function (array, value){
+    if (array.includes(value)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
 
 /** _.each
 * Arguments:
@@ -191,6 +200,21 @@ _.indexOf = function(array, value) {
 *   _.each(["a","b","c"], function(e,i,a){ console.log(e)});
 *      -> should log "a" "b" "c" to the console
 */
+ 
+_.each =  function each(collection, action) {
+    if(Array.isArray(collection)) {
+        for(var i = 0; i < collection.length; i++) {
+            action(collection[i], i, collection);
+        }
+    } else {
+        for (var key in collection) {
+            action(collection[key], key, collection);
+        }
+    }
+}
+
+
+
 
 
 /** _.unique
@@ -202,6 +226,15 @@ _.indexOf = function(array, value) {
 * Examples:
 *   _.unique([1,2,2,4,5,6,5,2]) -> [1,2,4,5,6]
 */
+_.unique = function unique(array){
+    let uni = [];
+    for (let i = 0; i < array.length; i++){
+        if (uni.indexOf(array[i]) === -1) {
+           uni.push(array[i]);
+        }
+    }
+    return uni; 
+}
 
 
 /** _.filter
@@ -219,6 +252,14 @@ _.indexOf = function(array, value) {
 * Extra Credit:
 *   use _.each in your implementation
 */
+_.filter = function filter(array, func){
+    let filtered = [];
+    for (let i = 0; i < array.length; i++){
+       filtered = func(array[i]);
+    }
+    return filtered;
+
+}
 
 
 /** _.reject
@@ -233,6 +274,9 @@ _.indexOf = function(array, value) {
 * Examples:
 *   _.reject([1,2,3,4,5], function(e){return e%2 === 0}) -> [1,3,5]
 */
+_.reject = function reject(array, func){
+
+}
 
 
 /** _.partition
@@ -253,6 +297,15 @@ _.indexOf = function(array, value) {
 *   }); -> [[2,4],[1,3,5]]
 }
 */
+_.partition = function partition(array, func){
+    
+    for (var i = 0; i < array.length; i ++)
+    {
+        output = func(array[array.length]) = input.slice(i, i + func);
+    }
+
+    return output;
+}
 
 
 /** _.map
@@ -270,6 +323,14 @@ _.indexOf = function(array, value) {
 * Examples:
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
+_.map = function map (collection, func){
+    for (var i = 0; i < collection.length; i++){
+        if (Array.isArray(collection)){
+           mapped = func(collection[i])
+        } else mapped = func(i);
+    }
+    return mapped;
+}
 
 
 /** _.pluck
@@ -282,6 +343,9 @@ _.indexOf = function(array, value) {
 * Examples:
 *   _.pluck([{a: "one"}, {a: "two"}], "a") -> ["one", "two"]
 */
+_.pluck = function pluck (array, prop){
+    return array.map(output => output[prop]);
+}
 
 
 /** _.every
@@ -305,6 +369,46 @@ _.indexOf = function(array, value) {
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
 */
 
+
+ 
+
+
+_.every = function(collection, func){
+    /*
+    let collection = [1, 2, 3, 4];
+    let func;
+    */
+    //determine if func is undefined
+    if(func === undefined){
+        // determine if the input collection is an array
+        if(Array.isArray(collection)){
+            //iterate through collection
+            for (let i = 0; i <collection.length; i++) {
+                if (!collection[i]) { //if the current value in the array is falsey
+                    return false;
+                }
+            }
+        } else { // else it's not an array
+            // iterating through collection as an object
+            for (let key in collection){
+                if (!collection[key]){
+                    if (!collection[key]) {
+                        return false;
+                    }
+                }
+            }
+        }
+    } else { // else it is defined ( meaning it's been passed in as an argument)
+        // determine if collection is an array
+        if (Array.isArray(collection)) {
+            for (let i = 0; i < collection.length; i++) { // pass current value, current index, aand collection into func as args
+                if (func(collection[i], i, collection) === false) {
+                    return false;
+            }
+        }
+    }
+    } return true
+};
 
 /** _.some
 * Arguments:
@@ -347,6 +451,27 @@ _.indexOf = function(array, value) {
 *   _.reduce([1,2,3], function(previousSum, currentValue, currentIndex){ return previousSum + currentValue }, 0) -> 6
 */
 
+_.reduce = function(array, func, seed){
+    // determine if no seed was passed into the function
+    if (seed === undefined){
+        // assign seed the first value in the input array
+        seed = array[0];
+        // iterate through input array
+        for (let i = 1; i < array.length; i++) {
+            // reassign seed to the result of calling input function on current
+            // value of seed, current item in the array, current index, and the collection
+            seed = func(seed, array[i], i, array);
+        }
+    } else {
+        for (let i = 0; i < array.length; i++){
+            seed = func(seed, array[i], i, array);
+        }
+    }
+    return seed;
+};
+
+
+
 
 /** _.extend
 * Arguments:
@@ -361,6 +486,24 @@ _.indexOf = function(array, value) {
 *   var data = {a:"one"};
 *   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
+*/
+
+_.extend = function(object, ...inputs) {
+    var copy = Object.assign(object, ...inputs);
+    return copy;
+
+}
+
+/* another method
+_.extend = function(...objects){
+    for(let i = 1; i < objects.length; i++){
+        for(let j in objects[i]){
+            objects[0][j] = objects[i][j];
+        }
+    }
+    return objects[0];
+}
+
 */
 
 //////////////////////////////////////////////////////////////////////

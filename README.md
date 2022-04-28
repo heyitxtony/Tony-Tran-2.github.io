@@ -15,5 +15,16 @@
  7) terminal => os install
  8) username // token
  9) install project
+ 
 
+## How to Access Lodown Director
+1) Go to File > Open File > make search bar look like this: /workspace/
+2) Select lodown
+3) Select index.js
 
+## how to push lodown
+1) In terminal -> cd..
+2) in terminal -> cd lodown
+3) git add -A
+4) git commit -m "description"
+5) git push
