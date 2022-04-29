@@ -252,15 +252,26 @@ _.unique = function unique(array){
 * Extra Credit:
 *   use _.each in your implementation
 */
-_.filter = function filter(array, func){
+/*_.filter = function filter(array, func){
     let filtered = [];
     for (let i = 0; i < array.length; i++){
-       filtered = func(array[i]);
+        let functionCallResult = func(array[i], i, array) ;
+       if (functionCallResult){
+           filtered.push(array[i])
+       }
     }
     return filtered;
-
 }
-
+*/
+_.filter = function(array, func){
+    let filtered = [];
+    for (var i = 0; i < array.length; i++){
+        if (func(array[i], i, array)){
+            filtered.push(array[i]);
+        }
+    }
+    return filtered;
+}
 
 /** _.reject
 * Arguments:
@@ -274,10 +285,31 @@ _.filter = function filter(array, func){
 * Examples:
 *   _.reject([1,2,3,4,5], function(e){return e%2 === 0}) -> [1,3,5]
 */
+/*
 _.reject = function reject(array, func){
+    let reject = [];
+    // iterate through array
+    for (let i = 0; i < array.length; i++){
+        //
+        let functionCallResult = func(array[i], i, array) ;
+       if (functionCallResult){
+           !reject.push(array[i])
+
+       }
+    }
+    return reject;
 
 }
-
+*/
+_.reject = function(array, func){
+    let reject = [];
+    for (var i = 0; i < array.length; i++){
+        if (!func(array[i], i, array)){
+            reject.push(array[i]);
+        }
+    }
+    return reject;
+}
 
 /** _.partition
 * Arguments:
@@ -298,15 +330,18 @@ _.reject = function reject(array, func){
 }
 */
 _.partition = function partition(array, func){
-    
-    for (var i = 0; i < array.length; i ++)
-    {
-        output = func(array[array.length]) = input.slice(i, i + func);
+    let output = [];
+    let output2 = [];
+
+    for (var i = 0; i < array.length; i++){
+        if (func(array[i], i, array)){
+           output.push(array[i]);
+        } else { output2.push(array[i])
+        }
     }
 
-    return output;
+    return [output, output2];
 }
-
 
 /** _.map
 * Arguments:
@@ -323,6 +358,7 @@ _.partition = function partition(array, func){
 * Examples:
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
+/*
 _.map = function map (collection, func){
     for (var i = 0; i < collection.length; i++){
         if (Array.isArray(collection)){
@@ -330,7 +366,28 @@ _.map = function map (collection, func){
         } else mapped = func(i);
     }
     return mapped;
-}
+}*/
+_.map = function(collection, func){
+    //create output array
+    var mapped = [];
+    //determine if the input collection is an array
+    if (Array.isArray(collection)) {
+        // iterate through the array using a for loop
+        for (var i = 0; i < collection.length; i++){
+            //invoke the input function on the current element of the array, the current index, and the array
+            mapped.push(func(collection[i], i, collection));
+        }
+    } else {
+    // else the input collection is an object
+    // iterate through the object using a for in loop
+    for (let key in collection) {
+        let result = func(collection[key], key, collection);
+        mapped.push(result);
+    }
+    }
+    return mapped;
+};
+
 
 
 /** _.pluck
@@ -344,8 +401,15 @@ _.map = function map (collection, func){
 *   _.pluck([{a: "one"}, {a: "two"}], "a") -> ["one", "two"]
 */
 _.pluck = function pluck (array, prop){
-    return array.map(output => output[prop]);
-}
+ //   return array.map((output => output[prop]));
+
+    // invoke the map function to return array of propetries
+    var plucked = _.map(array, function(item){
+        return item[prop];
+
+    });
+    return plucked;
+};
 
 
 /** _.every
@@ -368,11 +432,6 @@ _.pluck = function pluck (array, prop){
 *   _.every([2,4,6], function(e){return e % 2 === 0}) -> true
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
 */
-
-
- 
-
-
 _.every = function(collection, func){
     /*
     let collection = [1, 2, 3, 4];
@@ -430,6 +489,48 @@ _.every = function(collection, func){
 *   _.some([1,3,5], function(e){return e % 2 === 0}) -> false
 *   _.some([1,2,3], function(e){return e % 2 === 0}) -> true
 */
+_.some = function some (collection, func){
+        //determine if func is undefined
+        if(func === undefined){
+            // determine if the input collection is an array
+            if(Array.isArray(collection)){
+                // iterate through collection
+                for (let i = 0; i < collection.length; i++) {
+                    if (collection[i]) { //if the current value in the array is falsey
+                        return true;
+                    }
+                }
+            } else { // else it's not an array
+                // iterating through collection as an object
+                for (let key in collection){
+                    if (collection[key]){
+                        
+                            return true;
+                        }
+                    
+                }
+            }
+        }
+        else { // else it is defined ( meaning it's been passed in as an argument)
+            // determine if collection is an array
+            if (Array.isArray(collection)) {
+                for (let i = 0; i < collection.length; i++) { // pass current value, current index, aand collection into func as args
+                    if (func(collection[i], i, collection) === true) {
+                        return true;
+                        }
+                }
+            } else { 
+                for (let key in collection){
+                    if (func(collection[key], key, collection)){
+                            return true;
+                    }
+               }
+            }
+        
+        } return false
+    }
+
+
 
 
 /** _.reduce
