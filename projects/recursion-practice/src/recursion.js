@@ -140,15 +140,20 @@ var reverse = function(string) {
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
-  if (string.length === 0) return true;
-  if (string.length === 1) return true;
-  if (string.charAt(0).toLowerCase() !== string.charAt(string.length - 1).toLowerCase()) {
-    return false;
+  var string = string.toUpperCase()
+  // base:
+  if (string.length <= 2) {
+    return true;
   }
-  var str = string.substring(1, string.length - 1);
-  return palindrome(str);
+  
+  // recursion
+  if (string[0] === string[string.length - 1]) {
+    return palindrome(string.slice(1, string.length - 1))
+  }
 
+  return false
 };
+
 
 console.log(palindrome("race caR"));
 
@@ -166,6 +171,19 @@ var modulo = function(x, y) {
 // JavaScript's Math object.
 // ATTENTION DO NOT LEAVE COMMENTS IN THIS FUNCTION. The test is looking for any ('/').
 var multiply = function(x, y) {
+
+    if(y > 0 )
+    {
+        return (x + multiply(x, y-1));
+    }
+
+
+    else if(y < 0 )
+    {
+        return -multiply(x, -y);
+    }
+
+    return 0;
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
@@ -187,16 +205,39 @@ var gcd = function(x, y) {
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  // base{
+  if (str1.length === 0 && str2.length === 0){
+     return true};
+  if (str1[0] !== str2[0]){ 
+    return false};
+  // recursion
+  return compareStr(str1.substring(1), str2.substring(1));
+
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
-var createArray = function(str){
+var createArray = function(str, output = []){
+  if (str.length === 1) {
+    return [str[0]]};
+  var list = createArray(str.substring(1));
+  list.unshift(str[0]);
+  return list;
+
 };
 
 // 17. Reverse the order of an array
-var reverseArr = function (array) {
+var reverseArr = function(array){
+  // base
+    if (array.length === 1) {
+      return [array[0]];}
+      // rec.
+    var out = reverseArr(array.slice(1, array.length));
+    out.push(array[0]);
+    return out;
+  
 };
+
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
