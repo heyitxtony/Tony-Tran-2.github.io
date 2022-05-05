@@ -78,14 +78,37 @@ var sumBelow = function(n) {
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
 var range = function(x, y) {
-  if (y - x === 0) {
-    return [x];
-  } else {
-    const numbers = range(x, y - 1);    
-    numbers.push(y);
-    return numbers;
+  // if x and y are one diget apart return empty array
+  if (x === y || x + 1 === y || y + 1 === x) {return []}
+  else {
+    // if y is a larger number then x
+    // base
+    if (x < y) {
+  if (y - x === 1) {
+    return [x]
   }
-  };
+  // recrusion
+   else {
+     var number = range(x, y - 1)
+     number.push(y - 1)
+    return number
+  }
+  }
+  // if x is a larger number then y
+// base
+  else {
+    if (x - y === 1) {
+      return [x]
+    }
+    // recursion
+    else {
+      var number = range(x-1, y)
+      number.unshift(x - 1)
+      return number
+    }
+  }
+  }
+};
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
@@ -151,7 +174,7 @@ var palindrome = function(string) {
     return palindrome(string.slice(1, string.length - 1))
   }
 
-  return false
+  return false;
 };
 
 
@@ -243,17 +266,40 @@ var reverseArr = function(array){
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
+  // base
+  if (length === 0){ 
+    return [];}
+  var list = buildList(value, length-1);
+  // rec.
+  list.push(value);
+  return list;
+
 };
 
 // 19. Count the occurence of a value inside a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
 var countOccurrence = function(array, value) {
+  // base
+  if (array.length === 0) {
+    return 0
+  };
+  if (array[0] === value) return 1 + countOccurrence(array.slice(1, array.length), value);
+  return countOccurrence(array.slice(1, array.length), value);
 };
 
 // 20. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 var rMap = function(array, callback) {
+  // base
+  if (array.length === 0) {
+    return []
+  };
+    // rec
+  var output = rMap(array.slice(1, array.length), callback);
+  output.unshift(callback(array[0]));
+  return output;
+
 };
 
 // 21. Write a function that counts the number of times a key occurs in an object.
@@ -288,18 +334,46 @@ var fibonacci = function(n) {
 // nthFibo(5); // 5
 // nthFibo(7); // 13
 // nthFibo(3); // 2
+// test will ask for negative numbers;
 var nthFibo = function(n) {
+  // base
+  if (n < 0) {
+    return null;
+  }
+  if (n === 0){
+    return 0;
+  }
+  if (n === 1){
+    return 1;
+  }
+  // rec
+  return nthFibo(n-1) + nthFibo(n-2);
 };
 
 // 26. Given an array of words, return a new array containing each word capitalized.
 // var words = ['i', 'am', 'learning', 'recursion'];
 // capitalizedWords(words); // ['I', 'AM', 'LEARNING', 'RECURSION']
 var capitalizeWords = function(input) {
+  // base
+  if (input.length === 0) return [];
+  // rec
+  var list = capitalizeWords(input.slice(1, input.length));
+  list.unshift(input[0].toUpperCase());
+  return list;
+
+  
 };
 
 // 27. Given an array of strings, capitalize the first letter of each index.
 // capitalizeFirst(['car', 'poop', 'banana']); // ['Car', 'Poop', 'Banana']
 var capitalizeFirst = function(array) {
+  // base
+  if (array.length === 0) return [];
+  // rec
+  var list = capitalizeFirst(array.slice(1, array.length));
+  list.unshift(array[0][0].toUpperCase() + array[0].substring(1));
+  return list;
+
 };
 
 // 28. Return the sum of all even numbers in an object containing nested objects.
