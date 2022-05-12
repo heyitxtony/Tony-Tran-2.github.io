@@ -2,7 +2,8 @@
 // flatten /////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function flatten() {
+function flatten(arr) {
+  return arr.reduce((acc, curr) => acc.concat(curr), []);
 
 }
 
@@ -10,24 +11,51 @@ function flatten() {
 // loop ////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function loop() {
-
+function loop(start, stop, update, action) {
+  while (stop(start)) {
+    action(start);
+    start = update(start);
+  }
 }
 
 // /////////////////////////////////////////////////////////////////////////////
 // every ///////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function every() {
 
+function every(array, test) {
+  for (let i = 0; i < array.length; i++) {
+    if (!test(array[i])) return false;
+  }
+  return true;
 }
+
 
 // /////////////////////////////////////////////////////////////////////////////
 // dominantDirection ///////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function dominantDirection() {
-
+function dominantDirection(string) {
+  // replace the spaces in the string with empty strings
+  var newStr = string.replace(/\s/g, "");
+  // create arrays to stroe ltr and rtl scripts
+  let ltr = [];
+  let rtl = [];
+  // iterate through newStr
+  for (let i = 0; i < newStr.length; i++){
+    let scriptName = characterScript(newStr.charCodeAt(i));
+    // determine if scriptName is not null
+    if (scriptName !== null){
+      if (scriptName.direction === "ltr"){
+        ltr.push(scriptName);
+      } else {
+        rtl.push(scriptName);
+      }
+    }
+  }
+  if (ltr.length > rtl.length){
+    return  "ltr";
+  } else {return "rtl"}
 }
 
 // /////////////////////////////////////////////////////////////////////////////
