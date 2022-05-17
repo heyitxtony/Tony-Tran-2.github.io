@@ -3,29 +3,40 @@
 // triangles ///////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function triangles() {
-  for( i=0; i<8; i++){
-    xDimension= '#'.repeat(i)
-    console.log(xDimension);
+function triangles(char) {
+  let returnString = "";
+  for(let i = 0; i < char; i++) {
+    returnString += "#";
+    console.log(returnString);
+  }
 }
 ////////////////////////////////////////////////////////////////////////////////
 // fizzBuzz ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 function fizzBuzz() {
-  for (let i = 0; i < 100; i++) {
-    let output = "";
-
-    if (i % 3 === 0) {
-      output += "fizz";
+  for (let n = 1; n <= 100; n++) {
+    if (n % 3 == 0 && n % 5 == 0) {
+        console.log('fizzbuzz');
     }
-    if (i % 5 === 0) {
-      output += "buzz";
+    else if (n % 3 == 0) {
+        console.log('fizz');
     }
-
-    console.log(output || i);
-  }
-}
+    else if (n % 5 == 0) {
+        console.log('buzz');
+    }
+    else {
+        console.log(n);
+    }
+    for (var i = 1; i <= 100; i++) {
+      var output = "";
+      if (i%3==0) 
+        output = "fizz";
+      if (i%5==0) 
+        output += ("buzz");
+      console.log(output || i);
+    }
+}}
 ////////////////////////////////////////////////////////////////////////////////
 // drawChessboard //////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////

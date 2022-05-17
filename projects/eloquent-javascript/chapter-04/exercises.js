@@ -2,16 +2,23 @@
 // range ///////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-function range(start, end) {
-  let list = [];
-
-  for (let i = start; i <= end; i++) {
-    list.push(i);
+function range(start, end, step) {
+  if (step === undefined) {
+    step = 1;
   }
-
-  console.log(list);
-
+  let range = [];
+  if (step > 0) {
+    for(let i = start; i <= end; i += step) {
+      range.push(i);
+    }
+  } else {
+    for(let i = start; i >= end; i += step) {
+      range.push(i);
+    }
+  }
+  return range;
 }
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // sum /////////////////////////////////////////////////////////////////////////
